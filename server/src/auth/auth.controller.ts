@@ -1,0 +1,41 @@
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Res,
+  UseGuards,
+  ValidationPipe,
+} from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { Request, Response } from 'express';
+import { User } from 'src/entities/user/user.entity';
+import { AuthCredentialDto } from './auth.dto';
+import { AuthService } from './auth.service';
+import { GetUser } from './get-user.decorator';
+
+@Controller('api/auth')
+export class AuthController {
+  constructor(private authService: AuthService) {}
+
+  @Post('/register')
+  register(
+    @Body(ValidationPipe) authCredentialDto: AuthCredentialDto,
+  ): Promise<Partial<User>> {
+    return this.authService.register(authCredentialDto);
+  }
+
+  @Post('/login')
+  login(
+    @Res() res: Response,
+    @Body(ValidationPipe) authCredentialDto: Omit<AuthCredentialDto, 'email'>,
+  ): Promise<any> {
+    return this.authService.login(authCredentialDto, res);
+  }
+
+  @Get('/me')
+  @UseGuards(AuthGuard())
+  me(@GetUser() user: User) {
+    return user;
+  }
+}
