@@ -67,6 +67,15 @@ export class AuthService {
     return res.send(user);
   }
 
+  async logout(res: Response) {
+    res.setHeader('Set-Cookie', this.getCookieForLogOut());
+    return res.status(200).json({ success: true });
+  }
+
+  public getCookieForLogOut() {
+    return `Authentication=; HttpOnly; Path=/; Max-Age=0`;
+  }
+
   public getCookieWithJwtToken(userId: number) {
     const payload: TokenPayload = { userId };
     const token = this.jwtService.sign(payload);

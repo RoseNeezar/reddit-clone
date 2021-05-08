@@ -33,6 +33,11 @@ export class AuthController {
     return this.authService.login(authCredentialDto, res);
   }
 
+  @Post('/logout')
+  logout(@Res() res: Response) {
+    return this.authService.logout(res);
+  }
+
   @Get('/me')
   @UseGuards(AuthGuard())
   me(@GetUser() user: User) {
