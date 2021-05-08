@@ -23,3 +23,7 @@ export class AuthCredentialDto {
     this.password = password;
   }
 }
+
+export interface TokenPayload {
+  userId: number;
+}
