@@ -8,6 +8,8 @@ import { AuthController } from './auth/auth.controller';
 import { authMiddleware } from './auth/middleware/auth.middleware';
 import { PostModule } from './post/post.module';
 import { SubsModule } from './subs/subs.module';
+import { CommentsModule } from './comments/comments.module';
+import { VoteModule } from './vote/vote.module';
 import * as typeOrmConfig from './config/typeorm.config';
 
 @Module({
@@ -17,6 +19,8 @@ import * as typeOrmConfig from './config/typeorm.config';
     AuthModule,
     PostModule,
     SubsModule,
+    CommentsModule,
+    VoteModule,
   ],
   controllers: [AppController],
   providers: [AppService],
