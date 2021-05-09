@@ -10,10 +10,11 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Request, Response } from 'express';
-import { User } from 'src/entities/user/user.entity';
 import { UserRepository } from 'src/entities/user/user.repository';
 import { AuthCredentialDto, TokenPayload } from './auth.dto';
 import * as bcrypt from 'bcrypt';
+import * as cookie from 'cookie';
+import UserEntity from 'src/entities/user/user.entity';
 @Injectable()
 export class AuthService {
   constructor(
@@ -34,7 +35,7 @@ export class AuthService {
       throw new ConflictException('Username already exists');
     }
     try {
-      const user: Partial<User> = {
+      const user: Partial<UserEntity> = {
         username,
         email,
         password,
@@ -62,6 +63,7 @@ export class AuthService {
       throw new BadRequestException('password incorrect');
     }
     const cookie = this.getCookieWithJwtToken(user.id);
+
     res.setHeader('Set-Cookie', cookie);
     user.password = undefined;
     return res.send(user);
@@ -73,13 +75,25 @@ export class AuthService {
   }
 
   public getCookieForLogOut() {
-    return `Authentication=; HttpOnly; Path=/; Max-Age=0`;
+    return cookie.serialize('token', '', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      expires: new Date(0),
+      path: '/',
+    });
   }
 
   public getCookieWithJwtToken(userId: number) {
     const payload: TokenPayload = { userId };
     const token = this.jwtService.sign(payload);
-    return `Authentication=${token}; HttpOnly; Path=/; Max-Age=${process.env.JWT_EXPIRATION_TIME}`;
+    return cookie.serialize('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: +process.env.JWT_EXPIRATION_TIME,
+      path: '/',
+    });
   }
 
   public async getUserById(userId: number) {
@@ -88,7 +102,7 @@ export class AuthService {
       return user;
     }
     throw new HttpException(
-      'User with this id does not exist',
+      'UserEntity with this id does not exist',
       HttpStatus.NOT_FOUND,
     );
   }

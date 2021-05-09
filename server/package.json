@@ -18,7 +18,14 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "typeorm": "ts-node ./node_modules/typeorm/cli.js --config ./src/config/typeorm.config.ts",
+    "typeorm:create": "yarn run typeorm migration:create -d ./src/migrations -n",
+    "typeorm:generate": "yarn run typeorm migration:generate -d ./src/migrations -n",
+    "typeorm:run": "yarn run typeorm migration:run",
+    "typeorm:revert": "yarn run typeorm migration:revert",
+    "typeorm:sync": "yarn run typeorm schema:sync",
+    "typeorm:seed": "ts-node ./node_modules/typeorm-seeding/dist/cli.js  --config ../src/config/typeorm.config.ts seed"
   },
   "dependencies": {
     "@nestjs/common": "^7.5.1",
@@ -33,6 +40,7 @@
     "bcrypt": "5.0.0",
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
+    "cookie": "^0.4.1",
     "cookie-parser": "^1.4.5",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
@@ -47,6 +55,7 @@
     "@nestjs/schematics": "^7.1.3",
     "@nestjs/testing": "^7.5.1",
     "@types/bcrypt": "^3.0.1",
+    "@types/cookie": "^0.4.0",
     "@types/express": "^4.17.8",
     "@types/jest": "^26.0.15",
     "@types/node": "^14.14.6",
