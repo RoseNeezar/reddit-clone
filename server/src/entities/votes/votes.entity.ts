@@ -1,4 +1,5 @@
 import { Entity as TOEntity, Column, ManyToOne, JoinColumn } from 'typeorm';
+import CommentsEntity from '../comments/comments.entity';
 import Entity from '../entity.entity';
 import PostEntity from '../post/post.entity';
 import UserEntity from '../user/user.entity';
@@ -23,6 +24,6 @@ export default class VotesEntity extends Entity {
   @ManyToOne(() => PostEntity)
   post: PostEntity;
 
-  @ManyToOne(() => Comment)
-  comment: Comment;
+  @ManyToOne(() => CommentsEntity)
+  comment: CommentsEntity;
 }
