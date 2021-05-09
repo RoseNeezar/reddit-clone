@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  UseGuards,
+  ValidationPipe,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from 'src/auth/get-user.decorator';
 import { CreatePostDto, GetPostParamDto } from 'src/comments/comments.dto';
@@ -12,7 +20,10 @@ export class PostController {
 
   @Post('/')
   @UseGuards(AuthGuard())
-  createPost(@Body() createPost: CreatePostDto, @GetUser() user: UserEntity) {
+  createPost(
+    @Body(ValidationPipe) createPost: CreatePostDto,
+    @GetUser() user: UserEntity,
+  ) {
     return this.postService.createPost(createPost, user);
   }
 
