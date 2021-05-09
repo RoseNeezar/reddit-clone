@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Request, Response } from 'express';
-import { User } from 'src/entities/user/user.entity';
+import UserEntity from 'src/entities/user/user.entity';
 import { AuthCredentialDto } from './auth.dto';
 import { AuthService } from './auth.service';
 import { GetUser } from './get-user.decorator';
@@ -21,7 +21,7 @@ export class AuthController {
   @Post('/register')
   register(
     @Body(ValidationPipe) authCredentialDto: AuthCredentialDto,
-  ): Promise<Partial<User>> {
+  ): Promise<Partial<UserEntity>> {
     return this.authService.register(authCredentialDto);
   }
 
@@ -40,7 +40,7 @@ export class AuthController {
 
   @Get('/me')
   @UseGuards(AuthGuard())
-  me(@GetUser() user: User) {
+  me(@GetUser() user: UserEntity) {
     return user;
   }
 }
