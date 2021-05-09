@@ -15,7 +15,8 @@ import UserEntity from 'src/entities/user/user.entity';
 @Injectable()
 export class PostService {
   constructor(
-    @InjectRepository(CommentsRepository) private commentRepo: SubRepository,
+    @InjectRepository(CommentsRepository)
+    private commentRepo: CommentsRepository,
     @InjectRepository(SubRepository) private subRepo: SubRepository,
     @InjectRepository(PostRepository) private postRepo: PostRepository,
   ) {}

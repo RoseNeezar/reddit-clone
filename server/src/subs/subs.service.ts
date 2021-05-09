@@ -15,7 +15,8 @@ import { CreateSubDto } from './sub.dto';
 @Injectable()
 export class SubsService {
   constructor(
-    @InjectRepository(CommentsRepository) private commentRepo: SubRepository,
+    @InjectRepository(CommentsRepository)
+    private commentRepo: CommentsRepository,
     @InjectRepository(SubRepository) private subRepo: SubRepository,
     @InjectRepository(PostRepository) private postRepo: PostRepository,
   ) {}
