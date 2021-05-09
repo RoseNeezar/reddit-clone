@@ -10,6 +10,7 @@ import bcrypt from 'bcrypt';
 import { Exclude } from 'class-transformer';
 import PostEntity from '../post/post.entity';
 import Entity from '../entity.entity';
+import VotesEntity from '../votes/votes.entity';
 
 @TOEntity('users')
 export default class UserEntity extends Entity {
@@ -35,6 +36,9 @@ export default class UserEntity extends Entity {
 
   @OneToMany(() => PostEntity, (post) => post.user)
   posts: PostEntity[];
+
+  @OneToMany(() => VotesEntity, (vote) => vote.user)
+  votes: VotesEntity[];
 
   @BeforeInsert()
   async hashPassword() {
