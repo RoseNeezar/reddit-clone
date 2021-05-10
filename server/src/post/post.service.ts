@@ -11,6 +11,7 @@ import PostEntity from 'src/entities/post/post.entity';
 import { PostRepository } from 'src/entities/post/post.repository';
 import { SubRepository } from 'src/entities/sub/sub.repository';
 import UserEntity from 'src/entities/user/user.entity';
+import { EntityNotFoundError } from 'typeorm';
 
 @Injectable()
 export class PostService {
@@ -28,6 +29,7 @@ export class PostService {
     }
     try {
       const subRecord = await this.subRepo.findOneOrFail({ name: sub });
+
       const post: Partial<PostEntity> = {
         title,
         body,
@@ -37,6 +39,9 @@ export class PostService {
       const result = await this.postRepo.create(post).save();
       return result;
     } catch (error) {
+      if (error instanceof EntityNotFoundError) {
+        throw new NotFoundException('Sub not found');
+      }
       throw new InternalServerErrorException();
     }
   }
@@ -52,6 +57,7 @@ export class PostService {
 
   async getPost(getPostParam: GetPostParamDto) {
     const { identifier, slug } = getPostParam;
+
     try {
       const post = await this.postRepo.findOneOrFail(
         { identifier, slug },
@@ -59,6 +65,9 @@ export class PostService {
       );
       return post;
     } catch (error) {
+      if (error instanceof EntityNotFoundError) {
+        throw new NotFoundException('Sub not found');
+      }
       throw new InternalServerErrorException();
     }
   }
