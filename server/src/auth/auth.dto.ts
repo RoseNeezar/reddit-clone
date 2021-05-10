@@ -1,20 +1,22 @@
-import { IsString, MinLength, MaxLength, IsEmail } from 'class-validator';
+import {
+  IsString,
+  MinLength,
+  MaxLength,
+  IsEmail,
+  Length,
+} from 'class-validator';
 
 export class AuthCredentialDto {
   @IsString()
-  @MinLength(4)
-  @MaxLength(20)
-  @IsEmail()
+  @IsEmail(undefined, { message: 'Must be a valid email' })
   email: string;
 
   @IsString()
-  @MinLength(4)
-  @MaxLength(20)
+  @Length(3, 255, { message: 'Username must be at least 3 characters long' })
   username: string;
 
   @IsString()
-  @MinLength(8)
-  @MaxLength(20)
+  @Length(6, 255, { message: 'Password must be at least 6 characters long' })
   password: string;
 
   constructor(email: string, username: string, password: string) {

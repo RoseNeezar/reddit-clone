@@ -56,11 +56,11 @@ export class AuthService {
 
     const user = await this.userRepo.findOne({ username });
     if (!user) {
-      throw new NotFoundException('Username not found');
+      throw new BadRequestException();
     }
     const passwordMatches = await bcrypt.compare(password, user.password);
     if (!passwordMatches) {
-      throw new BadRequestException('password incorrect');
+      throw new BadRequestException();
     }
     const cookie = this.getCookieWithJwtToken(user.id);
 

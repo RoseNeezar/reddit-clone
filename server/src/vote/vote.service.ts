@@ -2,6 +2,7 @@ import {
   ConflictException,
   Injectable,
   InternalServerErrorException,
+  NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import CommentsEntity from 'src/entities/comments/comments.entity';
@@ -33,8 +34,8 @@ export class VoteService {
 
     try {
       let post = await this.postRepo.findOneOrFail({ identifier, slug });
-      let vote: Partial<VotesEntity>;
-      let comment: Partial<CommentsEntity>;
+      let vote: VotesEntity | undefined;
+      let comment: CommentsEntity | undefined;
 
       if (commentIdentifier) {
         // IF there is a comment identifier find vote by comment
@@ -49,15 +50,11 @@ export class VoteService {
 
       if (!vote && value === 0) {
         // if no vote and value = 0 return error
-        throw new ConflictException('Vote not found');
+        throw new NotFoundException('Vote not found');
       } else if (!vote) {
         // If no vote create it
-        // vote = new Vote({ user, value });
-        vote = {
-          user,
-          value,
-        };
-        //@ts-ignore
+        vote = new VotesEntity({ user, value });
+
         if (comment) vote.comment = comment;
         else vote.post = post;
         await this.voteRepo.create(vote).save();

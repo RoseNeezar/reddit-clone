@@ -14,7 +14,7 @@ import { CommentsService } from 'src/comments/comments.service';
 import UserEntity from 'src/entities/user/user.entity';
 import { PostService } from './post.service';
 
-@Controller('/api/post')
+@Controller('/api/posts')
 export class PostController {
   constructor(private postService: PostService) {}
 
