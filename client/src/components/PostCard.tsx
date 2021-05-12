@@ -69,15 +69,15 @@ const PostCard: FC<IPostCard> = ({ post }) => {
       <div className="flex flex-col w-full p-2 ">
         <div className="flex items-center ">
           <Link href={`/r/${post.subName}`}>
-            <>
-              <img
-                src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
-                className="w-6 h-6 mr-1 rounded-full cursor-pointer"
-              />
-              <a className="text-xs font-bold cursor-pointer hover:underline">
-                /r/{post.subName}
-              </a>
-            </>
+            <img
+              src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
+              className="w-6 h-6 mr-1 rounded-full cursor-pointer"
+            />
+          </Link>
+          <Link href={`/r/${post.subName}`}>
+            <a className="text-xs font-bold cursor-pointer hover:underline">
+              /r/{post.subName}
+            </a>
           </Link>
           <p className="text-xs text-gray-500">
             <span className="mx-1">•</span>
