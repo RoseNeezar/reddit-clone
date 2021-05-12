@@ -11,7 +11,7 @@ import UserEntity from 'src/entities/user/user.entity';
 import { VoteDto } from './vote.dto';
 import { VoteService } from './vote.service';
 
-@Controller('vote')
+@Controller('api/vote')
 export class VoteController {
   constructor(private voteService: VoteService) {}
 

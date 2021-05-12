@@ -46,9 +46,17 @@ export class PostService {
     }
   }
 
-  async getPosts() {
+  async getPosts(user: UserEntity) {
     try {
-      const posts = await this.postRepo.find({ order: { createAt: 'DESC' } });
+      const posts = await this.postRepo.find({
+        order: { createAt: 'DESC' },
+        relations: ['comments', 'votes', 'sub'],
+      });
+
+      if (user) {
+        posts.forEach((p) => p.setUserVote(user));
+      }
+
       return posts;
     } catch (error) {
       throw new InternalServerErrorException();

@@ -1,5 +1,5 @@
 import {
-  ConflictException,
+  BadRequestException,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
@@ -29,7 +29,7 @@ export class VoteService {
 
     // Validate vote value
     if (![-1, 0, 1].includes(value)) {
-      throw new ConflictException('Value must be -1, 0 or 1');
+      throw new BadRequestException('Value must be -1, 0 or 1');
     }
 
     try {

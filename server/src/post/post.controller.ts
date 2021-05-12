@@ -28,8 +28,9 @@ export class PostController {
   }
 
   @Get('/')
-  getPosts() {
-    return this.postService.getPosts();
+  @UseGuards(AuthGuard())
+  getPosts(@GetUser() user: UserEntity) {
+    return this.postService.getPosts(user);
   }
 
   @Get('/:identifier/:slug')
@@ -41,9 +42,9 @@ export class PostController {
   @UseGuards(AuthGuard())
   commentOnPost(
     @Param() getPostParam: GetPostParamDto,
-    @Body() body: string,
+    @Body() body: { body: string },
     @GetUser() user: UserEntity,
   ) {
-    return this.postService.commentOnPost(getPostParam, user, body);
+    return this.postService.commentOnPost(getPostParam, user, body.body);
   }
 }

@@ -50,6 +50,7 @@ export default class PostEntity extends Entity {
   @JoinColumn({ name: 'subName', referencedColumnName: 'name' })
   sub: SubEntity;
 
+  @Exclude()
   @OneToMany(() => CommentsEntity, (comment) => comment.post)
   comments: CommentsEntity[];
 
