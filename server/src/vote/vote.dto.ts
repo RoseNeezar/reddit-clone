@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class VoteDto {
   @IsString()
@@ -7,6 +7,7 @@ export class VoteDto {
   @IsString()
   slug: string;
 
+  @IsOptional()
   @IsString()
   commentIdentifier: string;
 

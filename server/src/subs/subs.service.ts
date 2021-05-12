@@ -2,6 +2,7 @@ import {
   ConflictException,
   Injectable,
   InternalServerErrorException,
+  NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CommentsRepository } from 'src/entities/comments/comments.repository';
@@ -43,6 +44,28 @@ export class SubsService {
       return result;
     } catch (error) {
       throw new InternalServerErrorException();
+    }
+  }
+
+  async getSub(name: string, user?: UserEntity) {
+    try {
+      const sub = await this.subRepo.findOneOrFail({ name });
+
+      const posts = await this.postRepo.find({
+        where: { sub },
+        order: { createAt: 'DESC' },
+        relations: ['comments', 'votes'],
+      });
+
+      sub.posts = posts;
+
+      if (user) {
+        sub.posts.forEach((p) => p.setUserVote(user));
+      }
+
+      return sub;
+    } catch (err) {
+      throw new NotFoundException('Subs not found');
     }
   }
 }

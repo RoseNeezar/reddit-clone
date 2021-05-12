@@ -5,9 +5,14 @@ import React, { ChangeEvent, FormEvent, useState } from "react";
 import InputGroup from "../components/InputGroup";
 import axios from "axios";
 import { errorHelper } from "../utils/error-serial";
+import { useAuthDispatch, useAuthState } from "../context/auth";
 
 const Login = () => {
   const router = useRouter();
+  const dispatch = useAuthDispatch();
+  const { authenticated } = useAuthState();
+  if (authenticated) router.push("/");
+
   const [formState, setFormState] = useState({
     username: "",
     password: "",
@@ -15,20 +20,22 @@ const Login = () => {
   const { username, password } = formState;
   const [errors, setErrors] = useState<any>({});
 
-  const onChangeText = (name: string) => (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setFormState({ ...formState, [name]: e.target.value });
-  };
+  const onChangeText =
+    (name: string) =>
+    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setFormState({ ...formState, [name]: e.target.value });
+    };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     try {
-      await axios.post("/auth/login", {
+      const res = await axios.post("/auth/login", {
         username,
         password,
       });
+      await axios.get("/auth/me");
+      dispatch("LOGIN", res.data);
       router.push("/");
     } catch (err) {
       setErrors(err.response.data);

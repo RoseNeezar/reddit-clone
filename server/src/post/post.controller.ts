@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from 'src/auth/get-user.decorator';
+import JwtAuthGuard from 'src/auth/guard/JwtAuthGuard';
 import { CreatePostDto, GetPostParamDto } from 'src/comments/comments.dto';
 import { CommentsService } from 'src/comments/comments.service';
 import UserEntity from 'src/entities/user/user.entity';
@@ -28,8 +29,9 @@ export class PostController {
   }
 
   @Get('/')
-  getPosts() {
-    return this.postService.getPosts();
+  @UseGuards(JwtAuthGuard)
+  getPosts(@GetUser() user: UserEntity) {
+    return this.postService.getPosts(user);
   }
 
   @Get('/:identifier/:slug')
@@ -41,9 +43,9 @@ export class PostController {
   @UseGuards(AuthGuard())
   commentOnPost(
     @Param() getPostParam: GetPostParamDto,
-    @Body() body: string,
+    @Body() body: { body: string },
     @GetUser() user: UserEntity,
   ) {
-    return this.postService.commentOnPost(getPostParam, user, body);
+    return this.postService.commentOnPost(getPostParam, user, body.body);
   }
 }
