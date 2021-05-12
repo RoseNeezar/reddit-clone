@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from 'src/auth/get-user.decorator';
+import JwtAuthGuard from 'src/auth/guard/JwtAuthGuard';
 import { CreatePostDto, GetPostParamDto } from 'src/comments/comments.dto';
 import { CommentsService } from 'src/comments/comments.service';
 import UserEntity from 'src/entities/user/user.entity';
@@ -28,7 +29,7 @@ export class PostController {
   }
 
   @Get('/')
-  @UseGuards(AuthGuard())
+  @UseGuards(JwtAuthGuard)
   getPosts(@GetUser() user: UserEntity) {
     return this.postService.getPosts(user);
   }

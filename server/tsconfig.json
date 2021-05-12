@@ -12,7 +12,6 @@
     "baseUrl": "./",
     "incremental": true,
     "alwaysStrict": true,
-    "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "resolveJsonModule": true

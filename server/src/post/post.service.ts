@@ -46,7 +46,7 @@ export class PostService {
     }
   }
 
-  async getPosts(user: UserEntity) {
+  async getPosts(user?: UserEntity) {
     try {
       const posts = await this.postRepo.find({
         order: { createAt: 'DESC' },

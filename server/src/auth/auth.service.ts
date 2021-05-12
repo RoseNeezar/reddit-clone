@@ -106,4 +106,12 @@ export class AuthService {
       HttpStatus.NOT_FOUND,
     );
   }
+
+  public async customGetUserById(userId: number) {
+    const user = await this.userRepo.findOne({ id: userId });
+    if (user) {
+      return user;
+    }
+    return null;
+  }
 }
