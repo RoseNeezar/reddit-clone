@@ -1,8 +1,10 @@
 import { AppProps } from "next/dist/next-server/lib/router/router";
 import axios from "axios";
 import { useRouter } from "next/router";
-import "../styles/globals.css";
 import Navbar from "../components/Navbar";
+
+import "../styles/globals.css";
+import "../styles/icons.css";
 
 axios.defaults.baseURL = "http://localhost:5000/api";
 axios.defaults.withCredentials = true;
