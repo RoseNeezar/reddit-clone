@@ -63,14 +63,17 @@ export class PostService {
     }
   }
 
-  async getPost(getPostParam: GetPostParamDto) {
+  async getPost(getPostParam: GetPostParamDto, user: UserEntity) {
     const { identifier, slug } = getPostParam;
 
     try {
       const post = await this.postRepo.findOneOrFail(
         { identifier, slug },
-        { relations: ['sub'] },
+        { relations: ['sub', 'votes', 'comments'] },
       );
+      if (user) {
+        post.setUserVote(user);
+      }
       return post;
     } catch (error) {
       if (error instanceof EntityNotFoundError) {

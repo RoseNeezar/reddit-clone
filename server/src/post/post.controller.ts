@@ -35,8 +35,9 @@ export class PostController {
   }
 
   @Get('/:identifier/:slug')
-  getPost(@Param() getPostParam: GetPostParamDto) {
-    return this.postService.getPost(getPostParam);
+  @UseGuards(JwtAuthGuard)
+  getPost(@Param() getPostParam: GetPostParamDto, @GetUser() user: UserEntity) {
+    return this.postService.getPost(getPostParam, user);
   }
 
   @Post('/:identifier/:slug/comments')
