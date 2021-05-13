@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { MulterModule } from '@nestjs/platform-express';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from 'src/auth/auth.module';
 import { CommentsRepository } from 'src/entities/comments/comments.repository';
@@ -14,6 +15,9 @@ import { SubsService } from './subs.service';
       SubRepository,
       PostRepository,
     ]),
+    MulterModule.register({
+      dest: './public/images',
+    }),
     AuthModule,
   ],
   controllers: [SubsController],
