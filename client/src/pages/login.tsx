@@ -34,9 +34,8 @@ const Login = () => {
         username,
         password,
       });
-      await axios.get("/auth/me");
       dispatch("LOGIN", res.data);
-      router.push("/");
+      router.back();
     } catch (err) {
       setErrors(err.response.data);
     }

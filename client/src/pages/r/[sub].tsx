@@ -6,8 +6,9 @@ import PostCard from "../../components/PostCard";
 import Image from "next/image";
 import classNames from "classnames";
 import { useAuthState } from "../../context/auth";
-import Axios from "axios";
+import axios from "axios";
 import { ISub } from "../../typings/types";
+import Sidebar from "../../components/Sidebar";
 
 export default function SubPage() {
   // Local state
@@ -46,7 +47,7 @@ export default function SubPage() {
     formData.append("type", fileInputRef.current!.name);
 
     try {
-      await Axios.post<ISub>(`/subs/${sub?.name}/image`, formData, {
+      await axios.post<ISub>(`/subs/${sub?.name}/image`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
@@ -135,6 +136,7 @@ export default function SubPage() {
           {/* Posts & Sidebar */}
           <div className="container flex pt-5">
             <div className="w-160">{postsMarkup}</div>
+            <Sidebar sub={sub} />
           </div>
         </>
       )}
