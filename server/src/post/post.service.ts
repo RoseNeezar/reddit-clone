@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
@@ -100,6 +101,25 @@ export class PostService {
       return result;
     } catch (error) {
       throw new InternalServerErrorException();
+    }
+  }
+
+  async getPostComments(getPostParam: GetPostParamDto, user?: UserEntity) {
+    const { identifier, slug } = getPostParam;
+    try {
+      const post = await this.postRepo.findOneOrFail({ identifier, slug });
+
+      const comments = await this.commentRepo.find({
+        where: { post },
+        order: { createAt: 'DESC' },
+        relations: ['votes'],
+      });
+      if (user) {
+        comments.forEach((c) => c.setUserVote(user));
+      }
+      return comments;
+    } catch (error) {
+      throw new BadRequestException();
     }
   }
 }

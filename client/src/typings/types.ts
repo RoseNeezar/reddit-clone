@@ -37,3 +37,14 @@ export interface ISub {
   bannerUrl: string;
   postCount?: number;
 }
+
+export interface Comment {
+  identifier: string;
+  body: string;
+  username: string;
+  createAt: string;
+  updatedAt: string;
+  // Virtuals
+  userVote: number;
+  voteScore: number;
+}

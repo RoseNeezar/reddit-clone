@@ -49,4 +49,13 @@ export class PostController {
   ) {
     return this.postService.commentOnPost(getPostParam, user, body.body);
   }
+
+  @Get('/:identifier/:slug/comments')
+  @UseGuards(JwtAuthGuard)
+  getPostComments(
+    @Param() getPostParam: GetPostParamDto,
+    @GetUser() user: UserEntity,
+  ) {
+    return this.postService.getPostComments(getPostParam, user);
+  }
 }

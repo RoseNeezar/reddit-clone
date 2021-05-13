@@ -8,7 +8,7 @@ import {
   OneToMany,
 } from 'typeorm';
 
-import { Exclude } from 'class-transformer';
+import { Exclude, Expose } from 'class-transformer';
 import Entity from '../entity.entity';
 import UserEntity from '../user/user.entity';
 import PostEntity from '../post/post.entity';
@@ -42,6 +42,10 @@ export default class CommentsEntity extends Entity {
   @Exclude()
   @OneToMany(() => VotesEntity, (vote) => vote.comment)
   votes: VotesEntity[];
+
+  @Expose() get voteScore(): number {
+    return this.votes?.reduce((prev, curr) => prev + (curr.value || 0), 0);
+  }
 
   protected userVote: number;
   setUserVote(user: UserEntity) {
