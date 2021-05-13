@@ -13,6 +13,8 @@ import { SubRepository } from 'src/entities/sub/sub.repository';
 import UserEntity from 'src/entities/user/user.entity';
 import * as fs from 'fs';
 import { CreateSubDto } from './sub.dto';
+import { getConnection } from 'typeorm';
+import PostEntity from 'src/entities/post/post.entity';
 
 @Injectable()
 export class SubsService {
@@ -81,7 +83,7 @@ export class SubsService {
     if (sub.username !== user.username) {
       throw new BadRequestException('You dont own this sub');
     }
-    console.log(file);
+
     if (type !== 'image' && type !== 'banner') {
       fs.unlinkSync(file.path);
       throw new BadRequestException('Invalid type');
@@ -104,6 +106,27 @@ export class SubsService {
       return result;
     } catch (err) {
       console.log(err);
+      throw new BadRequestException();
+    }
+  }
+
+  async topSubs() {
+    try {
+      const imageUrlExp = `COALESCE('${process.env.APP_URL}/images/' || s."imageUrn" , 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y')`;
+      const subs = await getConnection()
+        .createQueryBuilder()
+        .select(
+          `s.title, s.name, ${imageUrlExp} as "imageUrl", count(p.id) as "postCount"`,
+        )
+        .from(SubEntity, 's')
+        .leftJoin(PostEntity, 'p', `s.name = p."subName"`)
+        .groupBy('s.title, s.name, "imageUrl"')
+        .orderBy(`"postCount"`, 'DESC')
+        .limit(5)
+        .execute();
+
+      return subs;
+    } catch (error) {
       throw new BadRequestException();
     }
   }

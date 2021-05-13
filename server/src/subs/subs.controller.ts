@@ -32,6 +32,11 @@ export class SubsController {
     return this.subsService.createSub(createSub, user);
   }
 
+  @Get('/top/subs')
+  topSub() {
+    return this.subsService.topSubs();
+  }
+
   @Get('/:name')
   @UseGuards(JwtAuthGuard)
   getSub(@Param() name: { name: string }, @GetUser() user: UserEntity) {
