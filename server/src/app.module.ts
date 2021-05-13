@@ -11,9 +11,14 @@ import { SubsModule } from './subs/subs.module';
 import { CommentsModule } from './comments/comments.module';
 import { VoteModule } from './vote/vote.module';
 import * as typeOrmConfig from './config/typeorm.config';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public'),
+    }),
     TypeOrmModule.forRoot(typeOrmConfig),
     ConfigModule.forRoot({ isGlobal: true }),
     AuthModule,

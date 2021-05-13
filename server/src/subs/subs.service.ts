@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
   InternalServerErrorException,
@@ -10,7 +11,7 @@ import { PostRepository } from 'src/entities/post/post.repository';
 import SubEntity from 'src/entities/sub/sub.entity';
 import { SubRepository } from 'src/entities/sub/sub.repository';
 import UserEntity from 'src/entities/user/user.entity';
-import { getRepository } from 'typeorm';
+import * as fs from 'fs';
 import { CreateSubDto } from './sub.dto';
 
 @Injectable()
@@ -66,6 +67,44 @@ export class SubsService {
       return sub;
     } catch (err) {
       throw new NotFoundException('Subs not found');
+    }
+  }
+
+  async uploadSubImage(
+    name: string,
+    user: UserEntity,
+    type: string,
+    file: any,
+  ) {
+    const sub = await this.subRepo.findOneOrFail({ where: { name: name } });
+
+    if (sub.username !== user.username) {
+      throw new BadRequestException('You dont own this sub');
+    }
+    console.log(file);
+    if (type !== 'image' && type !== 'banner') {
+      fs.unlinkSync(file.path);
+      throw new BadRequestException('Invalid type');
+    }
+
+    try {
+      let oldImageUrn: string = '';
+      if (type === 'image') {
+        oldImageUrn = sub.imageUrn ?? '';
+        sub.imageUrn = file.filename;
+      } else if (type === 'banner') {
+        oldImageUrn = sub.bannerUrn ?? '';
+        sub.bannerUrn = file.filename;
+      }
+      const result = await sub.save();
+      if (oldImageUrn !== '') {
+        fs.unlinkSync(`public/images/${oldImageUrn}`);
+      }
+
+      return result;
+    } catch (err) {
+      console.log(err);
+      throw new BadRequestException();
     }
   }
 }
