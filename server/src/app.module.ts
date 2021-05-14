@@ -13,6 +13,7 @@ import { VoteModule } from './vote/vote.module';
 import * as typeOrmConfig from './config/typeorm.config';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { join } from 'path';
     SubsModule,
     CommentsModule,
     VoteModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],

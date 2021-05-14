@@ -44,6 +44,7 @@ export interface Comment {
   username: string;
   createAt: string;
   updatedAt: string;
+  post?: Post;
   // Virtuals
   userVote: number;
   voteScore: number;
