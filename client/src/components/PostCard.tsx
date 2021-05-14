@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { Dispatch, FC, SetStateAction } from "react";
 import { Post } from "../typings/types";
 import Link from "next/link";
 import dayjs from "dayjs";
@@ -6,32 +6,43 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import axios from "axios";
 import classNames from "classnames";
 import ActionButton from "./ActionButton";
+import { useAuthState } from "../context/auth";
+import { useRouter } from "next/router";
 
 dayjs.extend(relativeTime);
 
 interface IPostCard {
   post: Post;
+  revalidate?: Function;
+  voted?: Dispatch<SetStateAction<boolean>>;
+  vote?: boolean;
 }
 
-const PostCard: FC<IPostCard> = ({ post }) => {
+const PostCard: FC<IPostCard> = ({ post, revalidate, voted }) => {
   const { identifier, slug, userVote } = post;
+  const { authenticated } = useAuthState();
 
+  const router = useRouter();
   const vote = async (value: number) => {
+    if (!authenticated) router.push("/login");
+
+    if (value === userVote) value = 0;
+
     try {
-      const res = await axios.post("/vote", {
+      await axios.post("/vote", {
         identifier,
         slug,
         value,
       });
-
-      console.log(res.data);
+      if (voted) voted(!voted);
+      if (revalidate) revalidate();
     } catch (err) {
       console.log(err);
     }
   };
 
   return (
-    <div key={post.identifier} className="flex mb-4 bg-white rounded">
+    <div key={identifier} className="flex mb-4 bg-white rounded">
       {/* Vote section */}
       <div className="w-10 py-3 text-center bg-gray-200 rounded-l">
         {/* Upvote */}
@@ -59,8 +70,8 @@ const PostCard: FC<IPostCard> = ({ post }) => {
         </div>
       </div>
       {/* Post data section */}
-      <div className="flex flex-col w-full p-2 break-all">
-        <div className="flex items-center ">
+      <div className="w-full p-2 break-all">
+        <div className="flex items-center">
           <Link href={`/r/${post.subName}`}>
             <img
               src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
@@ -90,12 +101,12 @@ const PostCard: FC<IPostCard> = ({ post }) => {
         </Link>
         {post.body && <p className="my-1 text-sm">{post.body}</p>}
 
-        <div className="flex flex-row">
+        <div className="flex">
           <Link href={post.url}>
             <a>
               <ActionButton>
                 <i className="mr-1 fas fa-comment-alt fa-xs"></i>
-                <span className="font-bold">20 Comments</span>
+                <span className="font-bold">{post.commentCount} Comments</span>
               </ActionButton>
             </a>
           </Link>

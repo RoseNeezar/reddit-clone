@@ -13,6 +13,8 @@ import Sidebar from "../../components/Sidebar";
 export default function SubPage() {
   // Local state
   const [ownSub, setOwnSub] = useState(false);
+  const [voted, setVoted] = useState(false);
+
   // Global state
   const { authenticated, user } = useAuthState();
   // Utils
@@ -66,7 +68,13 @@ export default function SubPage() {
     postsMarkup = <p className="text-lg text-center">No posts submitted yet</p>;
   } else {
     postsMarkup = sub.posts.map((post) => (
-      <PostCard key={post.identifier} post={post} />
+      <PostCard
+        key={post.identifier}
+        post={post}
+        revalidate={revalidate}
+        voted={setVoted}
+        vote={voted}
+      />
     ));
   }
 
@@ -135,7 +143,7 @@ export default function SubPage() {
           </div>
           {/* Posts & Sidebar */}
           <div className="container flex pt-5">
-            <div className="w-160">{postsMarkup}</div>
+            <div className=" w-160">{postsMarkup}</div>
             <Sidebar sub={sub} />
           </div>
         </>

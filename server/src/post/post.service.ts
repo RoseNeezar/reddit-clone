@@ -13,6 +13,7 @@ import { PostRepository } from 'src/entities/post/post.repository';
 import { SubRepository } from 'src/entities/sub/sub.repository';
 import UserEntity from 'src/entities/user/user.entity';
 import { EntityNotFoundError } from 'typeorm';
+import { GetPaginatedPostParamDto } from './post.dto';
 
 @Injectable()
 export class PostService {
@@ -47,11 +48,16 @@ export class PostService {
     }
   }
 
-  async getPosts(user?: UserEntity) {
+  async getPosts(post?: GetPaginatedPostParamDto, user?: UserEntity) {
+    const { count, page } = post;
+    const currentPage: number = (page || 0) as number;
+    const postsPerPage: number = (count || 8) as number;
     try {
       const posts = await this.postRepo.find({
         order: { createAt: 'DESC' },
         relations: ['comments', 'votes', 'sub'],
+        skip: currentPage * postsPerPage,
+        take: postsPerPage,
       });
 
       if (user) {
