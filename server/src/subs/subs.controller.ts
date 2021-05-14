@@ -43,6 +43,11 @@ export class SubsController {
     return this.subsService.getSub(name.name, user);
   }
 
+  @Get('/search/:name')
+  searchSub(@Param('name') name: string) {
+    return this.subsService.searchSub(name);
+  }
+
   @Post('/:name/image')
   @UseGuards(AuthGuard())
   @UseInterceptors(

@@ -130,4 +130,22 @@ export class SubsService {
       throw new BadRequestException();
     }
   }
+
+  async searchSub(name: string) {
+    if (!name) {
+      throw new BadRequestException('Name is empty!');
+    }
+    try {
+      const subs = await this.subRepo
+        .createQueryBuilder()
+        .where('LOWER(name) LIKE :name', {
+          name: `${name.toLowerCase().trim()}%`,
+        })
+        .getMany();
+
+      return subs;
+    } catch (error) {
+      throw new BadRequestException();
+    }
+  }
 }
