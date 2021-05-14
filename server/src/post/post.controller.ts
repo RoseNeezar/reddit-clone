@@ -4,6 +4,7 @@ import {
   Get,
   Param,
   Post,
+  Query,
   UseGuards,
   ValidationPipe,
 } from '@nestjs/common';
@@ -13,6 +14,7 @@ import JwtAuthGuard from 'src/auth/guard/JwtAuthGuard';
 import { CreatePostDto, GetPostParamDto } from 'src/comments/comments.dto';
 import { CommentsService } from 'src/comments/comments.service';
 import UserEntity from 'src/entities/user/user.entity';
+import { GetPaginatedPostParamDto } from './post.dto';
 import { PostService } from './post.service';
 
 @Controller('/api/posts')
@@ -30,8 +32,11 @@ export class PostController {
 
   @Get('/')
   @UseGuards(JwtAuthGuard)
-  getPosts(@GetUser() user: UserEntity) {
-    return this.postService.getPosts(user);
+  getPosts(
+    @Query() post: GetPaginatedPostParamDto,
+    @GetUser() user: UserEntity,
+  ) {
+    return this.postService.getPosts(post, user);
   }
 
   @Get('/:identifier/:slug')
