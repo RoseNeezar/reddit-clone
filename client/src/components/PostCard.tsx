@@ -59,7 +59,7 @@ const PostCard: FC<IPostCard> = ({ post }) => {
         </div>
       </div>
       {/* Post data section */}
-      <div className="flex flex-col w-full p-2 ">
+      <div className="flex flex-col w-full p-2 break-all">
         <div className="flex items-center ">
           <Link href={`/r/${post.subName}`}>
             <img
