@@ -10,6 +10,8 @@ async function bootstrap() {
   app.enableCors({
     credentials: true,
     origin: 'https://leddit-client.vercel.app',
+    allowedHeaders: '*',
+    exposedHeaders: '*',
   });
   await app.listen(5000);
 }
