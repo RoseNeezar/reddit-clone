@@ -11,6 +11,9 @@ async function bootstrap() {
     credentials: true,
     origin: process.env.ORIGIN,
     optionsSuccessStatus: 200,
+    allowedHeaders:
+      'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept, Observe,Access-Control-Allow-Credentials true, Access-Control-Allow-Origin,Access-Control-Allow-Headers,*',
+    methods: 'GET,PUT,POST,DELETE,UPDATE,OPTIONS',
   });
   await app.listen(5000);
 }
