@@ -1,23 +1,23 @@
 import Head from "next/head";
+import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
+import useSWR, { useSWRInfinite } from "swr";
+import PostCard from "../components/PostCard";
+import { useAuthState } from "../context/auth";
 import { ISub, Post } from "../typings/types";
 
-import PostCard from "../components/PostCard";
-import useSWR, { useSWRInfinite } from "swr";
-import { useAuthState } from "../context/auth";
-import Link from "next/link";
-import Image from "next/image";
+const description = "This is a clone of reddit not the real thing";
+const title = "leddit: the front page of uhmmmm";
 
 export default function Home() {
   const [observedPost, setObservedPost] = useState("");
-  const [voted, setVoted] = useState(false);
-  // const { data: posts, revalidate } = useSWR<Post[]>("/posts");
+
   const { data: topSubs } = useSWR<ISub[]>("/subs/top/subs");
   const { authenticated } = useAuthState();
   const {
     data,
     error,
-    mutate,
     size: page,
     setSize: setPage,
     isValidating,
@@ -25,6 +25,8 @@ export default function Home() {
   } = useSWRInfinite<Post[]>((index) => `/posts?page=${index}`, {
     revalidateAll: true,
   });
+
+  const isInitialLoading = !data && !error;
 
   const posts: Post[] = data ? [].concat(...(data as any)) : [];
 
@@ -56,22 +58,25 @@ export default function Home() {
 
   useEffect(() => {
     revalidate();
-  }, [voted, revalidate, authenticated]);
+  }, [revalidate, authenticated]);
   return (
     <>
       <Head>
-        <title>reddit: front stuff</title>
+        <title>{title}</title>
+        <meta name="description" content={description}></meta>
+        <meta property="og:description" content={description} />
+        <meta property="og:title" content={title} />
+        <meta property="twitter:description" content={description} />
+        <meta property="twitter:title" content={title} />
       </Head>
       <div className="container flex pt-5 ">
         <div className="w-full px-4 md:w-160 md:p-0">
-          {isValidating && <p className="text-lg text-center">Loading..</p>}
+          {isInitialLoading && <p className="text-lg text-center">Loading..</p>}
           {posts?.map((post) => (
             <PostCard
               key={post.identifier}
               post={post}
               revalidate={revalidate}
-              voted={setVoted}
-              vote={voted}
             />
           ))}
           {isValidating && posts.length > 0 && (

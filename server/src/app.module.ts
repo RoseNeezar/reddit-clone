@@ -17,11 +17,11 @@ import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'),
     }),
     TypeOrmModule.forRoot(typeOrmConfig),
-    ConfigModule.forRoot({ isGlobal: true }),
     AuthModule,
     PostModule,
     SubsModule,

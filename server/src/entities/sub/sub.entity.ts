@@ -47,14 +47,14 @@ export default class SubEntity extends Entity {
   @Expose()
   get imageUrl(): string {
     return this.imageUrn
-      ? `${process.env.APP_URL}/images/${this.imageUrn}`
+      ? `https://roseneezar.dev/r/leddit/images/${this.imageUrn}`
       : 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y';
   }
 
   @Expose()
   get bannerUrl(): string | undefined {
     return this.bannerUrn
-      ? `${process.env.APP_URL}/images/${this.bannerUrn}`
+      ? `https://roseneezar.dev/r/leddit/images/${this.bannerUrn}`
       : undefined;
   }
 }

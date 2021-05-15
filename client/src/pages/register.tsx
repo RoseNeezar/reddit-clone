@@ -5,6 +5,7 @@ import axios from "axios";
 import { errorHelper } from "../utils/error-serial";
 import InputGroup from "../components/InputGroup";
 import { useRouter } from "next/router";
+import { useAuthState } from "../context/auth";
 
 const Register = () => {
   const router = useRouter();
@@ -14,15 +15,17 @@ const Register = () => {
     password: "",
   });
   const { email, username, password } = formState;
+  const { authenticated } = useAuthState();
 
+  if (authenticated) router.push("/");
   const [agreement, setAgreement] = useState(false);
   const [errors, setErrors] = useState<any>({});
 
-  const onChangeText = (name: string) => (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setFormState({ ...formState, [name]: e.target.value });
-  };
+  const onChangeText =
+    (name: string) =>
+    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setFormState({ ...formState, [name]: e.target.value });
+    };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -50,7 +53,7 @@ const Register = () => {
       </Head>
       <div
         className="w-40 h-screen bg-center bg-cover"
-        style={{ backgroundImage: "url('/images/bricks.jpg')" }}
+        style={{ backgroundImage: "url('/r/client/images/bricks.jpg')" }}
       />
       <div className="flex flex-col justify-center pl-6 ">
         <div className=" w-70">

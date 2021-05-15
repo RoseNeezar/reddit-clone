@@ -10,7 +10,7 @@ import Sidebar from "../../../../components/Sidebar";
 import axios from "axios";
 import { useAuthState } from "../../../../context/auth";
 import ActionButton from "../../../../components/ActionButton";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { Comment, Post } from "../../../../typings/types";
 
 dayjs.extend(relativeTime);
@@ -18,6 +18,8 @@ dayjs.extend(relativeTime);
 export default function PostPage() {
   // Local state
   const [newComment, setNewComment] = useState("");
+  const [description, setDescription] = useState("");
+
   // Global state
   const { authenticated, user } = useAuthState();
 
@@ -25,11 +27,13 @@ export default function PostPage() {
   const router = useRouter();
   const { identifier, sub, slug } = router.query;
 
-  const { data: post, error } = useSWR<Post>(
-    identifier && slug ? `/posts/${identifier}/${slug}` : null
-  );
+  const {
+    data: post,
+    error,
+    revalidate: revalidatePost,
+  } = useSWR<Post>(identifier && slug ? `/posts/${identifier}/${slug}` : null);
 
-  const { data: comments, revalidate } = useSWR<Comment[]>(
+  const { data: comments, revalidate: revalidateComment } = useSWR<Comment[]>(
     identifier && slug ? `/posts/${identifier}/${slug}/comments` : null
   );
 
@@ -53,8 +57,11 @@ export default function PostPage() {
         commentIdentifier: comment?.identifier,
         value,
       });
-
-      revalidate();
+      if (comment) {
+        revalidateComment();
+      } else {
+        revalidatePost();
+      }
     } catch (err) {
       console.log(err);
     }
@@ -71,16 +78,27 @@ export default function PostPage() {
 
       setNewComment("");
 
-      revalidate();
+      revalidateComment();
     } catch (err) {
       console.log(err);
     }
   };
+  useEffect(() => {
+    if (!post) return;
+    let desc = post.body || post.title;
+    desc = desc.substring(0, 158).concat("..");
+    setDescription(desc);
+  }, [post]);
 
   return (
     <>
       <Head>
         <title>{post?.title}</title>
+        <meta name="description" content={description}></meta>
+        <meta property="og:description" content={description} />
+        <meta property="og:title" content={post?.title} />
+        <meta property="twitter:description" content={description} />
+        <meta property="twitter:title" content={post?.title} />
       </Head>
       <Link href={`/r/${sub}`}>
         <a>
