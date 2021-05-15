@@ -9,9 +9,7 @@ async function bootstrap() {
   app.use(cookieParser());
   app.enableCors({
     credentials: true,
-    origin: 'https://leddit-client.vercel.app',
-    allowedHeaders: '*',
-    exposedHeaders: '*',
+    origin: '*',
   });
   await app.listen(5000);
 }
