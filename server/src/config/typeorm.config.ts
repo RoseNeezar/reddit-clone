@@ -15,8 +15,8 @@ const typeOrmConfig: PostgresConnectionOptions = {
   type: 'postgres',
   host: 'localhost',
   port: 5432,
-  username: 'postgres',
-  password: '',
+  username: 'postgress',
+  // password: process.env.DATABASE_PASSWORD,
   database: 'leddit',
 };
 
