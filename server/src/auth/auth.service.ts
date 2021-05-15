@@ -91,7 +91,7 @@ export class AuthService {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
-      maxAge: +process.env.JWT_EXPIRATION_TIME,
+      maxAge: 604800,
       path: '/',
     });
   }
