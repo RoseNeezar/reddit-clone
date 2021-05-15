@@ -76,8 +76,11 @@ export class AuthService {
 
   public getCookieForLogOut() {
     return cookie.serialize('token', '', {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'none',
       expires: new Date(0),
-      path: '*',
+      path: '/',
     });
   }
 
@@ -85,8 +88,11 @@ export class AuthService {
     const payload: TokenPayload = { userId };
     const token = this.jwtService.sign(payload);
     return cookie.serialize('token', token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'none',
       maxAge: 604800,
-      path: '*',
+      path: '/',
     });
   }
 
