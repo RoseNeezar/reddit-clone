@@ -65,7 +65,7 @@ const Navbar: React.FC = () => {
           </a>
         </Link>
         <span className="hidden text-2xl font-semibold lg:block">
-          <Link href="/">readit</Link>
+          <Link href="/">leddit</Link>
         </span>
       </div>
       {/* Serach Input */}

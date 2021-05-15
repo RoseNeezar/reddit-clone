@@ -2,7 +2,7 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 
 const typeOrmModuleOptions: TypeOrmModuleOptions = {
-  synchronize: false,
+  synchronize: true,
   logging: false,
   entities: ['dist/entities/**/*.js'],
   migrations: ['dist/migrations/*.js'],
@@ -17,7 +17,7 @@ const typeOrmConfig: PostgresConnectionOptions = {
   port: 5432,
   username: process.env.DATABASE_USER,
   password: process.env.DATABASE_PASSWORD,
-  database: 'reddit-clone',
+  database: 'leddit',
 };
 
 export = typeOrmConfig;
