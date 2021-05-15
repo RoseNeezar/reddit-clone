@@ -1,13 +1,13 @@
-import React, { Dispatch, FC, SetStateAction } from "react";
-import { Post } from "../typings/types";
-import Link from "next/link";
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
 import axios from "axios";
 import classNames from "classnames";
-import ActionButton from "./ActionButton";
-import { useAuthState } from "../context/auth";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import Link from "next/link";
 import { useRouter } from "next/router";
+import React, { FC } from "react";
+import { useAuthState } from "../context/auth";
+import { Post } from "../typings/types";
+import ActionButton from "./ActionButton";
 
 dayjs.extend(relativeTime);
 

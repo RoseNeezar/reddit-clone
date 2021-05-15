@@ -1,12 +1,11 @@
 import Head from "next/head";
-import { useEffect, useRef, useState } from "react";
-import { ISub, Post } from "../typings/types";
-
-import PostCard from "../components/PostCard";
-import useSWR, { useSWRInfinite } from "swr";
-import { useAuthState } from "../context/auth";
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import useSWR, { useSWRInfinite } from "swr";
+import PostCard from "../components/PostCard";
+import { useAuthState } from "../context/auth";
+import { ISub, Post } from "../typings/types";
 
 const description = "This is a clone of reddit not the real thing";
 const title = "leddit: the front page of uhmmmm";
