@@ -77,7 +77,7 @@ export class AuthService {
   public getCookieForLogOut() {
     return cookie.serialize('token', '', {
       httpOnly: true,
-      secure: true,
+      secure: false,
       sameSite: 'none',
       expires: new Date(0),
       path: '/',
@@ -89,7 +89,7 @@ export class AuthService {
     const token = this.jwtService.sign(payload);
     return cookie.serialize('token', token, {
       httpOnly: true,
-      secure: true,
+      secure: false,
       sameSite: 'none',
       maxAge: 604800,
       path: '/',
