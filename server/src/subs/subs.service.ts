@@ -112,7 +112,7 @@ export class SubsService {
 
   async topSubs() {
     try {
-      const imageUrlExp = `COALESCE('${process.env.APP_URL}/images/' || s."imageUrn" , 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y')`;
+      const imageUrlExp = `COALESCE('https://roseneezar.dev/r/leddit/images/' || s."imageUrn" , 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y')`;
       const subs = await getConnection()
         .createQueryBuilder()
         .select(
