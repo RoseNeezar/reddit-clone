@@ -11,7 +11,7 @@ async function bootstrap() {
   app.set('trust proxy', 1);
   app.enableCors({
     credentials: true,
-    origin: 'https://leddit-client.vercel.app',
+    origin: 'http://localhost:3010',
     methods: ['GET', 'PUT', 'POST'],
     allowedHeaders: ['Content-Type', 'Authorization', 'token', '*'],
   });

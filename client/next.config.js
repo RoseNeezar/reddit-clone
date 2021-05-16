@@ -10,6 +10,7 @@ module.exports = {
 
     return config;
   },
+  basePath:'/r/client',
   images: {
     domains: ["www.gravatar.com", process.env.APP_DOMAIN],
   },
