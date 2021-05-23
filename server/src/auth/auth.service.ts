@@ -76,9 +76,9 @@ export class AuthService {
 
   public getCookieForLogOut() {
     return cookie.serialize('token', '', {
-      httpOnly: false,
-      secure: true,
-      sameSite: 'none',
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
       expires: new Date(0),
       path: '/',
     });
@@ -88,10 +88,10 @@ export class AuthService {
     const payload: TokenPayload = { userId };
     const token = this.jwtService.sign(payload);
     return cookie.serialize('token', token, {
-      httpOnly: false,
-      secure: true,
-      sameSite: 'none',
-      maxAge: 604800,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: +process.env.JWT_EXPIRATION_TIME,
       path: '/',
     });
   }
