@@ -13,9 +13,9 @@ import { JwtStrategy } from './jwt.strategy';
     PassportModule.register({ defaultStrategy: 'jwt', session: false }),
     JwtModule.registerAsync({
       useFactory: async () => ({
-        secret: 'umajolie321',
+        secret: process.env.JWT_SECRET,
         signOptions: {
-          expiresIn: `604800s`,
+          expiresIn: `${process.env.JWT_EXPIRATION_TIME}s`,
         },
       }),
     }),

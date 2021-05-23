@@ -17,7 +17,7 @@ export default class JwtAuthGuard implements CanActivate {
     if (!token) {
       return true;
     }
-    const { userId }: any = jwt.verify(token, 'umajolie321');
+    const { userId }: any = jwt.verify(token, process.env.JWT_SECRET);
 
     const user = this.hanldeValidate(userId);
 
