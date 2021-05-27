@@ -1,0 +1,37 @@
+version: "3.5"
+services:
+  nginx:
+    restart: always
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./nginx
+    ports:
+      - "3011:80"
+  postgres:
+    image: "postgres:latest"
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
+      - POSTGRES_PASSWORD=postgres_password
+  api:
+    depends_on:
+      - postgres
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./server
+    env_file:
+      - .env
+    volumes:
+      - /app/node_modules
+      - ./server:/app
+  client:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./client
+    env_file:
+      - .env
+    volumes:
+      - /app/node_modules
+      - ./client:/app

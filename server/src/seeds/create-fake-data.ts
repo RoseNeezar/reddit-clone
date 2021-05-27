@@ -1,7 +1,6 @@
 import { Seeder } from 'typeorm-seeding';
 import { Connection } from 'typeorm';
-import * as bcrypt from 'bcrypt';
-
+import * as bcrypt from 'bcryptjs';
 import UserEntity from '../entities/user/user.entity';
 import SubEntity from '../entities/sub/sub.entity';
 import PostEntity from '../entities/post/post.entity';

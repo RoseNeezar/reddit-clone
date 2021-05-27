@@ -13,11 +13,11 @@ const typeOrmConfig: PostgresConnectionOptions = {
   // @ts-ignore
   seeds: ['dist/seeds/*.js'],
   type: 'postgres',
-  host: 'localhost',
+  host: 'postgres',
   port: 5432,
-  username: process.env.DATABASE_USER,
-  password: process.env.DATABASE_PASSWORD,
-  database: 'leddit',
+  username: 'postgres',
+  password: 'postgres_password',
+  database: 'postgres',
 };
 
 export = typeOrmConfig;

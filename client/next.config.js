@@ -10,8 +10,15 @@ module.exports = {
 
     return config;
   },
-  basePath:'/r/client',
+  webpackDevMiddleware: (config) => {
+    config.watchOptions = {
+      poll: 1000,
+      aggregateTimeout: 300,
+    };
+
+    return config;
+  },
   images: {
-    domains: ["www.gravatar.com", process.env.APP_DOMAIN],
+    domains: ["www.gravatar.com", "localhost"],
   },
 };

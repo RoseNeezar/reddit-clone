@@ -12,7 +12,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Request, Response } from 'express';
 import { UserRepository } from 'src/entities/user/user.repository';
 import { AuthCredentialDto, TokenPayload } from './auth.dto';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 import * as cookie from 'cookie';
 import UserEntity from 'src/entities/user/user.entity';
 @Injectable()

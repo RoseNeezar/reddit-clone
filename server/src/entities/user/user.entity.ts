@@ -6,7 +6,7 @@ import {
   BeforeInsert,
   OneToMany,
 } from 'typeorm';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 import { Exclude } from 'class-transformer';
 import PostEntity from '../post/post.entity';
 import Entity from '../entity.entity';
