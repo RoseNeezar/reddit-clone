@@ -11,7 +11,7 @@
     "autoprefixer": "^10.2.5",
     "axios": "^0.21.1",
     "dayjs": "^1.10.4",
-    "next": "10.2.0",
+    "next": "^10.2.3-canary.1",
     "postcss": "^8.2.14",
     "react": "17.0.2",
     "react-dom": "17.0.2",

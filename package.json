@@ -1,0 +1,13 @@
+{
+  "name": "reddit-clone",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/RoseNeezar/reddit-clone.git",
+  "author": "Neezar <rforlyffe@gmaicl.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "docker-compose -f docker-compose.dev.yml up",
+    "build": "docker-compose -f docker-compose.dev.yml up --build",
+    "stop": "docker-compose -f docker-compose.dev.yml down"
+  }
+}

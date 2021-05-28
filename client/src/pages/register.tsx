@@ -53,7 +53,7 @@ const Register = () => {
       </Head>
       <div
         className="w-40 h-screen bg-center bg-cover"
-        style={{ backgroundImage: "url('/r/client/images/bricks.jpg')" }}
+        style={{ backgroundImage: "url('/images/bricks.jpg')" }}
       />
       <div className="flex flex-col justify-center pl-6 ">
         <div className=" w-70">
