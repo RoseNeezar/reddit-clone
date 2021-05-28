@@ -4,7 +4,7 @@ language: generic
 services:
   - docker
 
-after_success:
+script:
   - docker build -t rneezar2/reddit-client ./client
   - docker build -t rneezar2/reddit-nginx ./nginx
   - docker build -t rneezar2/multi-server ./server
