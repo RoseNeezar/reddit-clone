@@ -106,11 +106,7 @@ export default function PostPage() {
             <div className="container flex">
               {post && (
                 <div className="w-8 h-8 mr-2 overflow-hidden rounded-full">
-                  <Image
-                    src={post.sub!.imageUrl}
-                    height={(8 * 16) / 4}
-                    width={(8 * 16) / 4}
-                  />
+                  <img src={post.sub!.imageUrl} className="w-20 h-20" />
                 </div>
               )}
               <p className="text-xl font-semibold text-white">/r/{sub}</p>
