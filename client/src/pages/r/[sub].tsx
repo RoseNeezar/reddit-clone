@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import { ChangeEvent, createRef, useEffect, useState } from "react";
 import useSWR from "swr";
 import PostCard from "../../components/PostCard";
-import Image from "next/image";
 import classNames from "classnames";
 import { useAuthState } from "../../context/auth";
 import axios from "axios";

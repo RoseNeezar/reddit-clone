@@ -4,7 +4,6 @@ import RedditLogo from "../images/reddit.svg";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { ISub } from "../typings/types";
-import Image from "next/image";
 import { useRouter } from "next/router";
 
 const Navbar: React.FC = () => {
