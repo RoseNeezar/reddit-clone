@@ -10,7 +10,6 @@ RUN yarn install --frozen-lockfile
 FROM node:alpine AS builder
 WORKDIR /app
 COPY . .
-COPY .env.production .env
 COPY --from=deps /app/node_modules ./node_modules
 RUN yarn build
 
