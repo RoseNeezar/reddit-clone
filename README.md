@@ -2,7 +2,7 @@
 
 Reddit clone made with nextjs, nestjs and docker compose. This app is made with docker containers, so no other dependencies needed to be installed other than docker. Use the travis.yml file as a template for ci/cd into dockerhub.
 
-## Feartures
+## Features
 
 ### Frontend
 - Nextjs
