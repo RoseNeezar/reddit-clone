@@ -5,11 +5,7 @@ services:
   - docker
 
 script:
-  - docker build -t rneezar2/reddit-client \
-  --build-arg=NEXT_PUBLIC_SERVER_BASE_URL=http://localhost:3011/api \ 
-  --build-arg=NEXT_PUBLIC_CLIENT_BASE_URL=http://localhost:3011 \
-  --build-arg=APP_DOMAIN=localhost \  ./client
-
+  - docker build -t rneezar2/reddit-client ./client
   - docker build -t rneezar2/reddit-nginx ./nginx
   - docker build -t rneezar2/reddit-server ./server
 
