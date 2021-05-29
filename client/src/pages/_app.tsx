@@ -8,7 +8,7 @@ import "../styles/globals.css";
 import "../styles/icons.css";
 import { AuthProvider } from "../context/auth";
 
-axios.defaults.baseURL = process.env.NEXT_PUBLIC_SERVER_BASE_URL + "/api";
+axios.defaults.baseURL = process.env.NEXT_PUBLIC_SERVER_BASE_URL;
 axios.defaults.withCredentials = true;
 
 const fetcher = async (url: string) => {
