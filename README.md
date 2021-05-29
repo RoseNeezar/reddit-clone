@@ -1,6 +1,6 @@
 # Reddit clone
 
-Reddit clone made with nextjs, nestjs and docker compose. This app is made with docker containers, so no other dependencies needed to be installed other than docker. Use the travis.yml file as a template for ci/cd into dockerhub.
+Reddit clone made with nextjs, nestjs, nginx and docker compose. This app is made with docker containers, so no other dependencies needed to be installed other than docker. Both the frontend and backend routing is handled by an nginx container. Use the travis.yml file as a template for ci/cd into dockerhub.
 
 ## Features
 
@@ -16,6 +16,7 @@ Reddit clone made with nextjs, nestjs and docker compose. This app is made with 
 - postgressql
 
 ### Devops
+- nginx
 - Travis ci
 - Docker
 - Docker compose
