@@ -26,7 +26,7 @@ Reddit clone made with nextjs, nestjs, nginx and docker compose. This app is mad
 
 ## Installation
 
-Install lazydocker on your system. This tool can help visualise container logs. To start run
+To start run
 
 ```bash
 cp .env.example .env
@@ -35,6 +35,9 @@ cp .env.example .env
 ```bash
 yarn start
 ```
+
+## Helpers
+Install lazydocker on your system. This tool can help visualise container logs.
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
