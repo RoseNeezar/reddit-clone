@@ -35,6 +35,7 @@ cp .env.example .env
 ```bash
 yarn start
 ```
+App runs by default at http://localhost:3011
 
 ## Helpers
 Install lazydocker on your system. This tool can help visualise container logs.
